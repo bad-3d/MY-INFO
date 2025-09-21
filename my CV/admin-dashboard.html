@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المدير - Ahmad Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            right: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Sidebar for LTR (English) */
+        [dir="ltr"] .sidebar {
+            left: 0;
+            right: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .admin-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .admin-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #f8f9fa;
+            border-right-color: #667eea;
+            color: #667eea;
+        }
+
+        /* Navigation for LTR (English) */
+        [dir="ltr"] .nav-item:hover,
+        [dir="ltr"] .nav-item.active {
+            border-left-color: #667eea;
+            border-right-color: transparent;
+        }
+
+        .nav-item i {
+            margin-left: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Navigation icons for LTR (English) */
+        [dir="ltr"] .nav-item i {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 280px;
+            padding: 2rem;
+            width: calc(100% - 280px);
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content for LTR (English) */
+        [dir="ltr"] .main-content {
+            margin-left: 280px;
+            margin-right: 0;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .language-toggle {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: #764ba2;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-left: 1rem;
+        }
+
+        .card-icon.users { background: #28a745; }
+        .card-icon.portfolios { background: #17a2b8; }
+        .card-icon.analytics { background: #ffc107; color: #333; }
+        .card-icon.settings { background: #6f42c1; }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* Tables for LTR (English) */
+        [dir="ltr"] .data-table th,
+        [dir="ltr"] .data-table td {
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            [dir="ltr"] .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="admin-name" data-ar="المدير العام" data-en="Administrator">المدير العام</div>
+                <div class="admin-role" data-ar="مدير النظام" data-en="System Admin">مدير النظام</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
+                </a>
+                <a href="#" class="nav-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span data-ar="إدارة المستخدمين" data-en="User Management">إدارة المستخدمين</span>
+                </a>
+                <a href="#" class="nav-item" data-section="portfolios">
+                    <i class="fas fa-briefcase"></i>
+                    <span data-ar="المحافظ" data-en="Portfolios">المحافظ</span>
+                </a>
+                <a href="#" class="nav-item" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span data-ar="التحليلات" data-en="Analytics">التحليلات</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <h1 class="page-title" data-ar="لوحة تحكم المدير" data-en="Admin Dashboard">لوحة تحكم المدير</h1>
+                <div class="top-actions">
+                    <button class="language-toggle" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i>
+                        <span data-ar="English" data-en="العربية">English</span>
+                    </button>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview -->
+            <div class="content-section active" id="dashboard">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <div class="card-title" data-ar="إجمالي المستخدمين" data-en="Total Users">إجمالي المستخدمين</div>
+                            </div>
+                        </div>
+                        <div class="card-value" id="totalUsers">0</div>
+                        <div class="card-description" data-ar="المستخدمين المسجلين في النظام" data-en="Registered users in the system">المستخدمين المسجلين في النظام</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon portfolios">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div>
+                                <div class="card-title" data-ar="المحافظ النشطة" data-en="Active Portfolios">المحافظ النشطة</div>
+                            </div>
+                        </div>
+                        <div class="card-value" id="activePortfolios">0</div>
+                        <div class="card-description" data-ar="المحافظ المنشورة والنشطة" data-en="Published and active portfolios">المحافظ المنشورة والنشطة</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon analytics">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div class="card-title" data-ar="الزيارات اليوم" data-en="Today's Visits">الزيارات اليوم</div>
+                            </div>
+                        </div>
+                        <div class="card-value" id="todayVisits">0</div>
+                        <div class="card-description" data-ar="عدد الزيارات لهذا اليوم" data-en="Number of visits today">عدد الزيارات لهذا اليوم</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon settings">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div>
+                                <div class="card-title" data-ar="حالة النظام" data-en="System Status">حالة النظام</div>
+                            </div>
+                        </div>
+                        <div class="card-value" style="font-size: 1.2rem; color: #28a745;" data-ar="نشط" data-en="Active">نشط</div>
+                        <div class="card-description" data-ar="جميع الخدمات تعمل بشكل طبيعي" data-en="All services running normally">جميع الخدمات تعمل بشكل طبيعي</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Management -->
+            <div class="content-section" id="users">
+                <div class="section-header">
+                    <h2 class="section-title" data-ar="إدارة المستخدمين" data-en="User Management">إدارة المستخدمين</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="exportUsers()">
+                            <i class="fas fa-download"></i>
+                            <span data-ar="تصدير" data-en="Export">تصدير</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showAddUserForm()">
+                            <i class="fas fa-plus"></i>
+                            <span data-ar="إضافة مستخدم" data-en="Add User">إضافة مستخدم</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Statistics -->
+                <div class="stats-grid" id="userStats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsersCount">0</h3>
+                            <p data-ar="إجمالي المستخدمين" data-en="Total Users">إجمالي المستخدمين</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="activeUsersCount">0</h3>
+                            <p data-ar="المستخدمين النشطين" data-en="Active Users">المستخدمين النشطين</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="adminUsersCount">0</h3>
+                            <p data-ar="المديرين" data-en="Administrators">المديرين</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="recentUsersCount">0</h3>
+                            <p data-ar="مستخدمين جدد (أسبوع)" data-en="New Users (Week)">مستخدمين جدد (أسبوع)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Controls -->
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="userSearch" placeholder="البحث في المستخدمين..." data-ar-placeholder="البحث في المستخدمين..." data-en-placeholder="Search users...">
+                    </div>
+                    <div class="filter-controls">
+                        <select id="userSort">
+                            <option value="name-asc" data-ar="الاسم (أ-ي)" data-en="Name (A-Z)">الاسم (أ-ي)</option>
+                            <option value="name-desc" data-ar="الاسم (ي-أ)" data-en="Name (Z-A)">الاسم (ي-أ)</option>
+                            <option value="email-asc" data-ar="البريد الإلكتروني (أ-ي)" data-en="Email (A-Z)">البريد الإلكتروني (أ-ي)</option>
+                            <option value="registrationDate-desc" data-ar="الأحدث أولاً" data-en="Newest First">الأحدث أولاً</option>
+                            <option value="registrationDate-asc" data-ar="الأقدم أولاً" data-en="Oldest First">الأقدم أولاً</option>
+                        </select>
+                        <select id="usersPerPage">
+                            <option value="10">10 مستخدمين</option>
+                            <option value="25">25 مستخدم</option>
+                            <option value="50">50 مستخدم</option>
+                            <option value="100">100 مستخدم</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th data-ar="المستخدم" data-en="User">المستخدم</th>
+                            <th data-ar="الهاتف" data-en="Phone">الهاتف</th>
+                            <th data-ar="الدور" data-en="Role">الدور</th>
+                            <th data-ar="الحالة" data-en="Status">الحالة</th>
+                            <th data-ar="تاريخ التسجيل" data-en="Registration Date">تاريخ التسجيل</th>
+                            <th data-ar="آخر دخول" data-en="Last Login">آخر دخول</th>
+                            <th data-ar="الإجراءات" data-en="Actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="7" class="loading">
+                                <div class="spinner"></div>
+                                <span data-ar="جاري تحميل البيانات..." data-en="Loading data...">جاري تحميل البيانات...</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info" id="paginationInfo"></div>
+                    <div class="pagination" id="usersPagination"></div>
+                </div>
+            </div>
+
+            <!-- Portfolios Management -->
+            <div class="content-section" id="portfolios">
+                <div class="section-header">
+                    <h2 class="section-title" data-ar="إدارة المحافظ" data-en="Portfolio Management">إدارة المحافظ</h2>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th data-ar="اسم المحفظة" data-en="Portfolio Name">اسم المحفظة</th>
+                            <th data-ar="المالك" data-en="Owner">المالك</th>
+                            <th data-ar="تاريخ الإنشاء" data-en="Created Date">تاريخ الإنشاء</th>
+                            <th data-ar="الحالة" data-en="Status">الحالة</th>
+                            <th data-ar="الإجراءات" data-en="Actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfoliosTableBody">
+                        <tr>
+                            <td colspan="5" class="loading">
+                                <div class="spinner"></div>
+                                <span data-ar="جاري تحميل البيانات..." data-en="Loading data...">جاري تحميل البيانات...</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Analytics -->
+            <div class="content-section" id="analytics">
+                <div class="section-header">
+                    <h2 class="section-title" data-ar="التحليلات والإحصائيات" data-en="Analytics & Statistics">التحليلات والإحصائيات</h2>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3 data-ar="الزيارات الشهرية" data-en="Monthly Visits">الزيارات الشهرية</h3>
+                        <div class="card-value" id="monthlyVisits">1,234</div>
+                        <div class="card-description" data-ar="زيارة هذا الشهر" data-en="visits this month">زيارة هذا الشهر</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 data-ar="المستخدمين الجدد" data-en="New Users">المستخدمين الجدد</h3>
+                        <div class="card-value" id="newUsers">45</div>
+                        <div class="card-description" data-ar="مستخدم جديد هذا الشهر" data-en="new users this month">مستخدم جديد هذا الشهر</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 data-ar="معدل التفاعل" data-en="Engagement Rate">معدل التفاعل</h3>
+                        <div class="card-value">78%</div>
+                        <div class="card-description" data-ar="معدل تفاعل المستخدمين" data-en="user engagement rate">معدل تفاعل المستخدمين</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="content-section" id="settings">
+                <div class="section-header">
+                    <h2 class="section-title" data-ar="إعدادات النظام" data-en="System Settings">إعدادات النظام</h2>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label data-ar="اسم الموقع" data-en="Site Name">اسم الموقع</label>
+                        <input type="text" value="Ahmad Portfolio" id="siteName">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ar="البريد الإلكتروني للمدير" data-en="Admin Email">البريد الإلكتروني للمدير</label>
+                        <input type="email" value="admin@ahmad-portfolio.com" id="adminEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ar="اللغة الافتراضية" data-en="Default Language">اللغة الافتراضية</label>
+                        <select id="defaultLanguage">
+                            <option value="ar">العربية</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ar="السماح بالتسجيل" data-en="Allow Registration">السماح بالتسجيل</label>
+                        <select id="allowRegistration">
+                            <option value="true" data-ar="نعم" data-en="Yes">نعم</option>
+                            <option value="false" data-ar="لا" data-en="No">لا</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-success" onclick="saveSettings()">
+                        <i class="fas fa-save"></i>
+                        <span data-ar="حفظ الإعدادات" data-en="Save Settings">حفظ الإعدادات</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-auth.js"></script>
+     <script src="user-management.js"></script>
+     <script>
+        let currentLang = 'ar';
+        let currentSection = 'dashboard';
+        
+        // Language toggle functionality
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            updateLanguage();
+            localStorage.setItem('adminLang', currentLang);
+        }
+        
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-ar][data-en]');
+            elements.forEach(element => {
+                element.textContent = element.getAttribute(`data-${currentLang}`);
+            });
+            
+            // تطبيق اتجاه النص على الصفحة
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.body.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.body.style.fontFamily = currentLang === 'ar' ? 'Cairo, sans-serif' : 'Roboto, sans-serif';
+            
+            // تطبيق التغييرات على العناصر الرئيسية
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            
+            if (sidebar) {
+                sidebar.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+            }
+            
+            if (mainContent) {
+                mainContent.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+            }
+            
+            // إعادة تحميل القسم الحالي لتطبيق التغييرات
+            if (currentSection) {
+                showSection(currentSection);
+            }
+        }
+        
+        // Navigation functionality
+        function showSection(sectionId) {
+            console.log('Attempting to show section:', sectionId);
+            
+            // التحقق من الصلاحيات قبل عرض القسم
+            if (!checkSectionPermission(sectionId)) {
+                alert(currentLang === 'ar' ? 'ليس لديك صلاحية للوصول إلى هذا القسم' : 'You do not have permission to access this section');
+                return;
+            }
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.style.display = 'block';
+                currentSection = sectionId;
+                
+                console.log('Section shown successfully:', sectionId);
+                
+                // تحميل بيانات خاصة بالقسم
+                if (sectionId === 'users' && window.userManager) {
+                    window.userManager.loadUsers();
+                }
+                
+                // تسجيل النشاط إذا كان adminAuth متاحاً
+                if (typeof adminAuth !== 'undefined' && adminAuth.logActivity) {
+                    adminAuth.logActivity('section_access', { section: sectionId });
+                }
+            } else {
+                console.error('Section not found:', sectionId);
+            }
+            
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const activeNavItem = document.querySelector(`[data-section="${sectionId}"]`);
+            if (activeNavItem) {
+                activeNavItem.classList.add('active');
+            }
+            
+            // Load section data
+            if (sectionId === 'users') {
+                loadUsersData();
+            } else if (sectionId === 'portfolios') {
+                loadPortfoliosData();
+            }
+        }
+        
+        // التحقق من صلاحيات الوصول للأقسام
+        function checkSectionPermission(sectionId) {
+            // التحقق من وجود جلسة صالحة
+            if (!window.currentAdminSession) {
+                return false;
+            }
+            
+            // السماح بالوصول لجميع الأقسام للمدير المسجل
+            return true;
+        }
+        
+        // Logout functionality
+        function logout() {
+            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من تسجيل الخروج؟' : 'Are you sure you want to logout?')) {
+                adminAuth.logout();
+            }
+        }
+        
+        // عرض معلومات المدير الحالي
+        function displayAdminInfo() {
+            try {
+                const session = window.currentAdminSession;
+                if (session) {
+                    const adminEmailElement = document.getElementById('adminEmail');
+                    const adminRoleElement = document.getElementById('adminRole');
+                    
+                    if (adminEmailElement) {
+                        adminEmailElement.textContent = session.email || 'admin@company.com';
+                    }
+                    if (adminRoleElement) {
+                        const roleText = session.role === 'super_admin' ? 'مدير عام' : 'مدير النظام';
+                        adminRoleElement.textContent = roleText;
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في عرض معلومات المدير:', error);
+            }
+        }
+        
+        // تحديث إحصائيات لوحة التحكم
+        function updateDashboardStats() {
+            // الحصول على بيانات المستخدمين من التخزين المحلي
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const activityLog = adminAuth.getActivityLog(100);
+            
+            // تحديث الإحصائيات
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('activePortfolios').textContent = '23'; // يمكن تحديثها من بيانات حقيقية
+            document.getElementById('todayVisits').textContent = '1,247'; // يمكن تحديثها من بيانات حقيقية
+        }
+        
+        // عرض سجل الأنشطة الأخيرة
+        function displayRecentActivity() {
+            const activityLog = adminAuth.getActivityLog(10);
+            const activityContainer = document.querySelector('.recent-activity');
+            
+            if (activityContainer && activityLog.length > 0) {
+                const activityHTML = activityLog.map(activity => {
+                    const date = new Date(activity.timestamp).toLocaleString(currentLang === 'ar' ? 'ar-SA' : 'en-US');
+                    return `
+                        <div class="activity-item">
+                            <span class="activity-action">${getActivityDescription(activity.action)}</span>
+                            <span class="activity-time">${date}</span>
+                        </div>
+                    `;
+                }).join('');
+                
+                activityContainer.innerHTML = `
+                    <h3 data-ar="الأنشطة الأخيرة" data-en="Recent Activity">${currentLang === 'ar' ? 'الأنشطة الأخيرة' : 'Recent Activity'}</h3>
+                    ${activityHTML}
+                `;
+            }
+        }
+        
+        // وصف الأنشطة
+        function getActivityDescription(action) {
+            const descriptions = {
+                'ar': {
+                    'login_success': 'تسجيل دخول ناجح',
+                    'logout': 'تسجيل خروج',
+                    'section_access': 'الوصول إلى قسم',
+                    'data_export': 'تصدير البيانات',
+                    'password_change': 'تغيير كلمة المرور'
+                },
+                'en': {
+                    'login_success': 'Successful login',
+                    'logout': 'Logout',
+                    'section_access': 'Section access',
+                    'data_export': 'Data export',
+                    'password_change': 'Password change'
+                }
+            };
+            
+            return descriptions[currentLang][action] || action;
+        }
+        
+        // التحقق من صلاحية الوصول للمدير
+        function checkAdminAccess() {
+            const session = adminAuth.checkSessionValidity();
+            if (!session) {
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+            // حفظ بيانات الجلسة للاستخدام في الصفحة
+            window.currentAdminSession = session;
+            return true;
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحقق من صحة جلسة المدير
+            if (!checkAdminAccess()) {
+                return;
+            }
+            
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    showSection(section);
+                });
+            });
+            
+            // Load saved language
+            const savedLang = localStorage.getItem('adminLang');
+            if (savedLang) {
+                currentLang = savedLang;
+            }
+            
+            updateLanguage();
+            displayAdminInfo();
+            showSection('dashboard');
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // تحميل إدارة المستخدمين
+            if (typeof UserManager !== 'undefined') {
+                window.userManager = new UserManager();
+            }
+        });
+        
+        // Load dashboard statistics
+        function loadDashboardData() {
+            // Simulate loading dashboard data
+            setTimeout(() => {
+                updateDashboardStats();
+                displayRecentActivity();
+            }, 1000);
+        }
+        
+        function loadUsersData() {
+            const tbody = document.getElementById('usersTableBody');
+            
+            // Simulate loading users data
+            setTimeout(() => {
+                const users = [
+                    { name: 'أحمد محمد', email: 'ahmed@example.com', date: '2024-01-15', status: 'active' },
+                    { name: 'فاطمة علي', email: 'fatima@example.com', date: '2024-01-20', status: 'active' },
+                    { name: 'محمد حسن', email: 'mohamed@example.com', date: '2024-01-25', status: 'inactive' },
+                ];
+
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.date}</td>
+                        <td><span class="status-badge status-${user.status}">${user.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
+                        <td>
+                            <button class="btn btn-primary" style="padding: 0.5rem; margin-left: 0.5rem;" onclick="editUser('${user.email}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 0.5rem;" onclick="deleteUser('${user.email}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }, 1000);
+        }
+
+        function loadPortfoliosData() {
+            const tbody = document.getElementById('portfoliosTableBody');
+            
+            // Simulate loading portfolios data
+            setTimeout(() => {
+                const portfolios = [
+                    { name: 'محفظة أحمد التقنية', owner: 'أحمد محمد', date: '2024-01-15', status: 'active' },
+                    { name: 'أعمال فاطمة الإبداعية', owner: 'فاطمة علي', date: '2024-01-20', status: 'active' },
+                    { name: 'مشاريع محمد', owner: 'محمد حسن', date: '2024-01-25', status: 'inactive' },
+                ];
+
+                tbody.innerHTML = portfolios.map(portfolio => `
+                    <tr>
+                        <td>${portfolio.name}</td>
+                        <td>${portfolio.owner}</td>
+                        <td>${portfolio.date}</td>
+                        <td><span class="status-badge status-${portfolio.status}">${portfolio.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
+                        <td>
+                            <button class="btn btn-primary" style="padding: 0.5rem; margin-left: 0.5rem;" onclick="viewPortfolio('${portfolio.name}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 0.5rem;" onclick="deletePortfolio('${portfolio.name}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }, 1000);
+        }
+        
+        // تصدير البيانات
+        function exportData() {
+            if (requirePermission('analytics', 'export')) {
+                adminAuth.exportData();
+            }
+        }
+        
+        // تغيير كلمة المرور
+        function changePassword() {
+            const currentPassword = prompt(currentLang === 'ar' ? 'أدخل كلمة المرور الحالية:' : 'Enter current password:');
+            if (!currentPassword) return;
+            
+            const newPassword = prompt(currentLang === 'ar' ? 'أدخل كلمة المرور الجديدة:' : 'Enter new password:');
+            if (!newPassword) return;
+            
+            adminAuth.changePassword(currentPassword, newPassword)
+                .then(message => {
+                    alert(message);
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+
+        function showAddUserForm() {
+            if (window.userManager) {
+                window.userManager.showAddUserModal();
+            } else {
+                alert('سيتم إضافة نموذج إضافة مستخدم جديد');
+            }
+        }
+        
+        function exportUsers() {
+            if (window.userManager) {
+                window.userManager.exportUsers();
+            } else {
+                alert('سيتم تصدير بيانات المستخدمين');
+            }
+        }
+
+        function editUser(email) {
+            if (window.userManager) {
+                window.userManager.editUser(email);
+            } else {
+                alert('تحرير المستخدم: ' + email);
+            }
+        }
+
+        function deleteUser(email) {
+            if (window.userManager) {
+                window.userManager.deleteUser(email);
+            } else if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+                alert('تم حذف المستخدم: ' + email);
+                loadUsersData();
+            }
+        }
+
+        function viewPortfolio(name) {
+            alert('عرض المحفظة: ' + name);
+        }
+
+        function deletePortfolio(name) {
+            if (confirm('هل أنت متأكد من حذف هذه المحفظة؟')) {
+                alert('تم حذف المحفظة: ' + name);
+                loadPortfoliosData();
+            }
+        }
+
+        function saveSettings() {
+            const settings = {
+                siteName: document.getElementById('siteName').value,
+                adminEmail: document.getElementById('adminEmail').value,
+                defaultLanguage: document.getElementById('defaultLanguage').value,
+                allowRegistration: document.getElementById('allowRegistration').value
+            };
+
+            localStorage.setItem('adminSettings', JSON.stringify(settings));
+            alert('تم حفظ الإعدادات بنجاح!');
+        }
+    </script>
+</body>
+</html>
