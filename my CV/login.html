@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - Ahmad Portfolio</title>
+    <link rel="stylesheet" href="auth-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Login Type Toggle Styles */
+        .login-type-toggle {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 1.5rem 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .toggle-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Admin Security Code Styles */
+        .admin-only {
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 1rem;
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-only label {
+            color: #856404;
+            font-weight: 600;
+        }
+
+        .admin-only .input-container {
+            background: white;
+            border-radius: 8px;
+        }
+
+        .admin-only .input-container i {
+            color: #ffc107;
+        }
+
+        .security-note {
+            display: block;
+            margin-top: 0.5rem;
+            color: #856404;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Hide user-only elements in admin mode */
+        .form-section.admin-mode .user-only {
+            display: none !important;
+        }
+
+        /* Admin Mode Styling */
+        .admin-mode .form-header h2 {
+            color: #6f42c1;
+        }
+
+        .admin-mode .submit-btn {
+            background: linear-gradient(135deg, #6f42c1, #5a2d91);
+        }
+
+        .admin-mode .submit-btn:hover {
+            background: linear-gradient(135deg, #5a2d91, #4c2a85);
+        }
+
+        /* RTL Support for Toggle Buttons */
+        [dir="rtl"] .toggle-btn {
+            flex-direction: row-reverse;
+        }
+
+        /* LTR Support for Toggle Buttons */
+        [dir="ltr"] .toggle-btn {
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Background Animation -->
+        <div class="background-animation">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+        </div>
+
+        <!-- Language Toggle -->
+        <div class="language-toggle-container">
+            <button class="language-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-globe"></i>
+                <span id="lang-text">English</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="auth-content">
+            <!-- Left Side - Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <div class="logo">
+                        <h1>Ahmad</h1>
+                        <p class="logo-subtitle" data-ar="محفظة أعمال احترافية" data-en="Professional Portfolio">محفظة أعمال احترافية</p>
+                    </div>
+                    
+                    <div class="welcome-text">
+                        <h2 data-ar="مرحباً بك مرة أخرى!" data-en="Welcome Back!">مرحباً بك مرة أخرى!</h2>
+                        <p data-ar="سجل دخولك للوصول إلى لوحة التحكم وإدارة محفظة أعمالك" data-en="Sign in to access your dashboard and manage your portfolio">سجل دخولك للوصول إلى لوحة التحكم وإدارة محفظة أعمالك</p>
+                    </div>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-edit"></i>
+                            <span data-ar="تحرير المعلومات الشخصية" data-en="Edit Personal Information">تحرير المعلومات الشخصية</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <span data-ar="إدارة المشاريع" data-en="Manage Projects">إدارة المشاريع</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span data-ar="تتبع الإحصائيات" data-en="Track Analytics">تتبع الإحصائيات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login Form -->
+            <div class="form-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2 data-ar="تسجيل الدخول" data-en="Sign In">تسجيل الدخول</h2>
+                        <p data-ar="أدخل بياناتك للوصول إلى حسابك" data-en="Enter your credentials to access your account">أدخل بياناتك للوصول إلى حسابك</p>
+                        
+                        <!-- Login Type Toggle -->
+                        <div class="login-type-toggle">
+                            <button type="button" class="toggle-btn active" id="userLoginBtn" onclick="switchToUserLogin()">
+                                <i class="fas fa-user"></i>
+                                <span data-ar="مستخدم عادي" data-en="Regular User">مستخدم عادي</span>
+                            </button>
+                            <button type="button" class="toggle-btn" id="adminLoginBtn" onclick="switchToAdminLogin()">
+                                <i class="fas fa-shield-alt"></i>
+                                <span data-ar="مدير النظام" data-en="Administrator">مدير النظام</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email" data-ar="البريد الإلكتروني" data-en="Email Address">البريد الإلكتروني</label>
+                            <div class="input-container">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required 
+                                       placeholder="example@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                            <div class="input-container">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required 
+                                       placeholder="••••••••">
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Admin Security Code Field (Hidden by default) -->
+                        <div class="form-group admin-only" id="securityCodeGroup" style="display: none;">
+                            <label for="securityCode" data-ar="رمز الأمان" data-en="Security Code">رمز الأمان</label>
+                            <div class="input-container">
+                                <i class="fas fa-key"></i>
+                                <input type="text" id="securityCode" name="securityCode" 
+                                       placeholder="ADMIN2024" 
+                                       data-ar-placeholder="ADMIN2024" 
+                                       data-en-placeholder="ADMIN2024">
+                            </div>
+                            <small class="security-note" data-ar="رمز الأمان مطلوب للمديرين فقط" data-en="Security code required for administrators only">رمز الأمان مطلوب للمديرين فقط</small>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                <span data-ar="تذكرني" data-en="Remember me">تذكرني</span>
+                            </label>
+                            <a href="#" class="forgot-password" data-ar="نسيت كلمة المرور؟" data-en="Forgot password?">نسيت كلمة المرور؟</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span data-ar="تسجيل الدخول" data-en="Sign In">تسجيل الدخول</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+
+                        <div class="divider user-only">
+                            <span data-ar="أو" data-en="or">أو</span>
+                        </div>
+
+                        <div class="social-login user-only">
+                            <button type="button" class="social-btn google-btn">
+                                <i class="fab fa-google"></i>
+                                <span data-ar="تسجيل الدخول بـ Google" data-en="Sign in with Google">تسجيل الدخول بـ Google</span>
+                            </button>
+                            <button type="button" class="social-btn github-btn">
+                                <i class="fab fa-github"></i>
+                                <span data-ar="تسجيل الدخول بـ GitHub" data-en="Sign in with GitHub">تسجيل الدخول بـ GitHub</span>
+                            </button>
+                        </div>
+
+                        <div class="form-footer">
+                            <p data-ar="ليس لديك حساب؟" data-en="Don't have an account?">ليس لديك حساب؟</p>
+                            <a href="register.html" class="link-btn" data-ar="إنشاء حساب جديد" data-en="Create new account">إنشاء حساب جديد</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Portfolio Button -->
+        <div class="back-to-portfolio">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                <span data-ar="العودة إلى المحفظة" data-en="Back to Portfolio">العودة إلى المحفظة</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p data-ar="جاري تسجيل الدخول..." data-en="Signing in...">جاري تسجيل الدخول...</p>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <div class="success-content">
+            <i class="fas fa-check-circle"></i>
+            <h3 data-ar="تم تسجيل الدخول بنجاح!" data-en="Login Successful!">تم تسجيل الدخول بنجاح!</h3>
+            <p data-ar="سيتم توجيهك إلى لوحة التحكم..." data-en="Redirecting to dashboard...">سيتم توجيهك إلى لوحة التحكم...</p>
+        </div>
+    </div>
+
+    <script src="auth-script.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAuth();
+            checkSavedLanguage();
+            updateLanguageForNewElements();
+        });
+
+        // Override toggleLanguage function to include new elements
+        function toggleLanguage() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            
+            localStorage.setItem('preferredLanguage', newLang);
+            
+            // Update page direction and language
+            document.documentElement.lang = newLang;
+            document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all elements with language attributes
+            document.querySelectorAll('[data-ar][data-en]').forEach(element => {
+                element.textContent = element.getAttribute('data-' + newLang);
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-ar-placeholder][data-en-placeholder]').forEach(element => {
+                element.placeholder = element.getAttribute('data-' + newLang + '-placeholder');
+            });
+            
+            // Update language toggle button
+            const toggleBtn = document.querySelector('.language-toggle span');
+            if (toggleBtn) {
+                toggleBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
+            }
+            
+            // Update new elements
+            updateLanguageForNewElements();
+        }
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+
+        // Global variables
+        let isAdminMode = false;
+        
+        // Admin credentials (في التطبيق الحقيقي، يجب أن تكون هذه البيانات محمية في قاعدة البيانات)
+        const ADMIN_CREDENTIALS = {
+            email: 'admin@company.com',
+            password: 'SecureAdmin2024!',
+            securityCode: 'ADMIN2024'
+        };
+
+        // Switch to user login
+        function switchToUserLogin() {
+            isAdminMode = false;
+            document.getElementById('userLoginBtn').classList.add('active');
+            document.getElementById('adminLoginBtn').classList.remove('active');
+            document.getElementById('securityCodeGroup').style.display = 'none';
+            document.getElementById('securityCode').removeAttribute('required');
+            document.querySelector('.form-section').classList.remove('admin-mode');
+            
+            // Update form header
+            const formHeader = document.querySelector('.form-header h2');
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            formHeader.textContent = currentLang === 'ar' ? 'تسجيل الدخول' : 'Sign In';
+        }
+
+        // Switch to admin login
+        function switchToAdminLogin() {
+            isAdminMode = true;
+            document.getElementById('adminLoginBtn').classList.add('active');
+            document.getElementById('userLoginBtn').classList.remove('active');
+            document.getElementById('securityCodeGroup').style.display = 'block';
+            document.getElementById('securityCode').setAttribute('required', 'required');
+            document.querySelector('.form-section').classList.add('admin-mode');
+            
+            // Update form header
+            const formHeader = document.querySelector('.form-header h2');
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            formHeader.textContent = currentLang === 'ar' ? 'تسجيل دخول المدير' : 'Admin Login';
+        }
+
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Show loading
+            showLoading();
+
+            if (isAdminMode) {
+                // Admin login
+                const securityCode = document.getElementById('securityCode').value;
+                
+                setTimeout(() => {
+                    hideLoading();
+                    
+                    // Validate admin credentials
+                    if (email === ADMIN_CREDENTIALS.email && 
+                        password === ADMIN_CREDENTIALS.password && 
+                        securityCode === ADMIN_CREDENTIALS.securityCode) {
+                        
+                        // Save admin session
+                        const adminData = {
+                            email: email,
+                            name: 'Admin',
+                            role: 'administrator',
+                            loginTime: new Date().toISOString(),
+                            sessionId: generateSessionId()
+                        };
+
+                        localStorage.setItem('adminData', JSON.stringify(adminData));
+                        localStorage.setItem('isAdminLoggedIn', 'true');
+
+                        // Show success message
+                        showSuccessMessage();
+
+                        // Redirect to admin dashboard
+                        setTimeout(() => {
+                            window.location.href = 'admin-dashboard.html';
+                        }, 2000);
+                    } else {
+                        showErrorMessage('بيانات المدير غير صحيحة', 'Invalid admin credentials');
+                    }
+                }, 1500);
+            } else {
+                // Regular user login
+                setTimeout(() => {
+                    hideLoading();
+                    
+                    // Save user data (in real app, this would come from server)
+                    const userData = {
+                        email: email,
+                        name: 'Ahmad',
+                        loginTime: new Date().toISOString(),
+                        rememberMe: rememberMe
+                    };
+
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    localStorage.setItem('isLoggedIn', 'true');
+
+                    // Show success message
+                    showSuccessMessage();
+
+                    // Redirect to profile editor
+                    setTimeout(() => {
+                        window.location.href = 'profile-editor.html';
+                    }, 2000);
+                }, 1500);
+            }
+        }
+        
+        // Generate session ID for admin
+        function generateSessionId() {
+            return 'admin_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Show/hide loading
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            document.getElementById('successMessage').classList.add('active');
+        }
+
+        // Show error message
+        function showErrorMessage(arMessage, enMessage) {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            const message = currentLang === 'ar' ? arMessage : enMessage;
+            
+            // Create error message element if it doesn't exist
+            let errorDiv = document.getElementById('errorMessage');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.id = 'errorMessage';
+                errorDiv.style.cssText = `
+                    background: #f8d7da;
+                    color: #721c24;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                    text-align: center;
+                    border: 1px solid #f5c6cb;
+                `;
+                document.querySelector('.auth-form').insertBefore(errorDiv, document.querySelector('.form-group'));
+            }
+            
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            errorDiv.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Update language for new elements
+        function updateLanguageForNewElements() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            
+            // Update toggle buttons
+            document.querySelectorAll('.toggle-btn [data-ar][data-en]').forEach(element => {
+                element.textContent = element.getAttribute('data-' + currentLang);
+            });
+            
+            // Update security note
+            const securityNote = document.querySelector('.security-note');
+            if (securityNote) {
+                securityNote.textContent = securityNote.getAttribute('data-' + currentLang);
+            }
+            
+            // Update placeholders
+            const securityCodeInput = document.getElementById('securityCode');
+            if (securityCodeInput) {
+                securityCodeInput.placeholder = securityCodeInput.getAttribute('data-' + currentLang + '-placeholder');
+            }
+            
+            // Update form header based on current mode
+            const formHeader = document.querySelector('.form-header h2');
+            if (isAdminMode) {
+                formHeader.textContent = currentLang === 'ar' ? 'تسجيل دخول المدير' : 'Admin Login';
+            } else {
+                formHeader.textContent = currentLang === 'ar' ? 'تسجيل الدخول' : 'Sign In';
+            }
+        }
+    </script>
+</body>
+</html>

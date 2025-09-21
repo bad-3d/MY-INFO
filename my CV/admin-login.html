@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل دخول المدير - Ahmad Portfolio</title>
+    <link rel="stylesheet" href="auth-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        
+        .admin-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        .admin-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .security-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .security-notice i {
+            color: #f39c12;
+            margin-left: 0.5rem;
+        }
+        
+        .admin-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .admin-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .admin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #764ba2;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <button class="language-toggle" onclick="toggleLanguage()" aria-label="تبديل اللغة">
+        <i class="fas fa-globe"></i>
+        <span data-ar="English" data-en="العربية">English</span>
+    </button>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="admin-header">
+                <div class="admin-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1 class="admin-title" data-ar="لوحة تحكم المدير" data-en="Admin Dashboard">لوحة تحكم المدير</h1>
+                <p class="admin-subtitle" data-ar="تسجيل دخول آمن للمديرين المعتمدين فقط" data-en="Secure login for authorized administrators only">تسجيل دخول آمن للمديرين المعتمدين فقط</p>
+            </div>
+
+            <div class="security-notice">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span data-ar="منطقة محظورة - للمديرين المعتمدين فقط" data-en="Restricted Area - Authorized Administrators Only">منطقة محظورة - للمديرين المعتمدين فقط</span>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText"></span>
+            </div>
+
+            <form class="admin-form" id="adminLoginForm">
+                <div class="form-group">
+                    <label for="email" data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label for="securityCode" data-ar="رمز الأمان" data-en="Security Code">رمز الأمان</label>
+                    <input type="text" id="securityCode" name="securityCode" required 
+                           placeholder="ADMIN2024" 
+                           data-ar-placeholder="ADMIN2024" 
+                           data-en-placeholder="ADMIN2024">
+                </div>
+
+                <button type="submit" class="admin-btn" id="adminLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-ar="دخول لوحة التحكم" data-en="Access Dashboard">دخول لوحة التحكم</span>
+                </button>
+            </form>
+
+            <div class="back-link">
+                <a href="index.html" data-ar="← العودة للصفحة الرئيسية" data-en="← Back to Home">← العودة للصفحة الرئيسية</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p data-ar="جاري التحقق من الصلاحيات..." data-en="Verifying credentials...">جاري التحقق من الصلاحيات...</p>
+        </div>
+    </div>
+
+    <script src="auth-script.js"></script>
+    <script src="admin-auth.js"></script>
+    <script>
+        // Admin credentials (في التطبيق الحقيقي، يجب أن تكون هذه البيانات محمية في قاعدة البيانات)
+        const ADMIN_CREDENTIALS = {
+            email: 'admin@company.com',
+            password: 'SecureAdmin2024!',
+            securityCode: 'ADMIN2024'
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAuth();
+            checkSavedLanguage();
+            
+            // التحقق من وجود جلسة نشطة
+            if (adminAuth.checkSessionValidity()) {
+                window.location.href = 'admin-dashboard.html';
+                return;
+            }
+            
+            // Focus on first input
+            const emailField = document.getElementById('email');
+            if (emailField) {
+                emailField.focus();
+            }
+        });
+
+        // Handle admin login form submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await handleAdminLogin();
+        });
+
+        async function handleAdminLogin() {
+             const email = document.getElementById('email').value.trim();
+             const password = document.getElementById('password').value;
+             const securityCode = document.getElementById('securityCode').value.trim();
+            
+            // Clear previous messages
+            hideMessages();
+            
+            // Validate inputs
+            if (!email || !password || !securityCode) {
+                showError('جميع الحقول مطلوبة', 'All fields are required');
+                return;
+            }
+            
+            // Show loading
+            showLoading();
+            
+            try {
+                // استخدام نظام المصادقة الجديد
+                await adminAuth.login(email, password, securityCode);
+                
+                hideLoading();
+                showSuccess('تم تسجيل الدخول بنجاح!', 'Login successful!');
+                
+                // Redirect to admin dashboard
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                hideLoading();
+                showError(error.message || 'بيانات الدخول غير صحيحة', error.message || 'Invalid credentials');
+            }
+        }
+        
+        function generateSessionId() {
+            return 'admin_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('adminLoginBtn').disabled = true;
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('adminLoginBtn').disabled = false;
+        }
+        
+        function showError(arMessage, enMessage) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            
+            errorText.textContent = currentLang === 'ar' ? arMessage : enMessage;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showSuccess(arMessage, enMessage) {
+            const successDiv = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            
+            successText.textContent = currentLang === 'ar' ? arMessage : enMessage;
+            successDiv.style.display = 'block';
+        }
+        
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        
+        // Language toggle function
+        function toggleLanguage() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            
+            localStorage.setItem('preferredLanguage', newLang);
+            
+            // Update page direction and language
+            document.documentElement.lang = newLang;
+            document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update all elements with language attributes
+            document.querySelectorAll('[data-ar][data-en]').forEach(element => {
+                element.textContent = element.getAttribute('data-' + newLang);
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-ar-placeholder][data-en-placeholder]').forEach(element => {
+                element.placeholder = element.getAttribute('data-' + newLang + '-placeholder');
+            });
+            
+            // Update language toggle button
+            const toggleBtn = document.querySelector('.language-toggle span');
+            toggleBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
+        }
+        
+        function checkSavedLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && savedLang !== 'ar') {
+                toggleLanguage();
+            }
+        }
+    </script>
+</body>
+</html>

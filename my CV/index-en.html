@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio - Ahmad</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>Ahmad</h2>
+            </div>
+            <div class="nav-controls">
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="auth-controls">
+                    <a href="login.html" class="auth-btn login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                    <a href="profile-editor.html" class="auth-btn profile-btn">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </div>
+                <button class="language-toggle" onclick="switchLanguage()">
+                    <i class="fas fa-globe"></i>
+                    <span>العربية</span>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Hello, I'm <span class="highlight">Ahmad</span></h1>
+                    <h2>Full Stack Developer</h2>
+                    <p>I create modern and responsive web applications using the latest technologies. I have experience in both frontend and backend development.</p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                    </div>
+                </div>
+                <div class="profile-image">
+                    <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="200" cy="200" r="180" fill="url(#profileGradient)" opacity="0.1"/>
+                        <circle cx="200" cy="200" r="150" fill="url(#profileGradient)" opacity="0.2"/>
+                        <circle cx="200" cy="200" r="120" fill="url(#profileGradient)" opacity="0.3"/>
+                        <circle cx="200" cy="160" r="50" fill="#4f46e5" opacity="0.8"/>
+                        <ellipse cx="200" cy="280" rx="80" ry="100" fill="#4f46e5" opacity="0.6"/>
+                        <text x="200" y="350" text-anchor="middle" fill="#4f46e5" font-size="16" font-weight="600">Ahmad</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I am a passionate full-stack developer with experience in building modern web applications. I love creating user-friendly interfaces and robust backend systems.</p>
+                    <p>I continuously learn new technologies and stay updated with the latest trends in web development to deliver high-quality solutions.</p>
+                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-js"></i>
+                            <span>JavaScript</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-react"></i>
+                            <span>React</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-vue"></i>
+                            <span>Vue.js</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-database"></i>
+                            <span>MongoDB</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-database"></i>
+                            <span>PostgreSQL</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="65"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-server"></i>
+                            <span>Express.js</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Development Tools</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-code"></i>
+                            <span>VS Code</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-docker"></i>
+                            <span>Docker</span>
+                            <div class="skill-level">
+                                <div class="skill-bar" data-level="60"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Projects & Work</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <svg width="100%" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="200" fill="#f3f4f6"/>
+                            <rect x="20" y="20" width="360" height="40" fill="#4f46e5" opacity="0.8"/>
+                            <rect x="20" y="80" width="170" height="100" fill="#6b7280" opacity="0.6"/>
+                            <rect x="210" y="80" width="170" height="100" fill="#6b7280" opacity="0.4"/>
+                            <text x="200" y="110" text-anchor="middle" fill="#374151" font-size="14">E-commerce Website</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <h3>E-commerce Website</h3>
+                        <p>A complete e-commerce website with product management system, shopping cart, and secure payment</p>
+                        <div class="project-tech">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-small">View Project</a>
+                            <a href="#" class="btn btn-small btn-outline">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <svg width="100%" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="200" fill="#f3f4f6"/>
+                            <circle cx="100" cy="100" r="60" fill="#10b981" opacity="0.8"/>
+                            <circle cx="200" cy="100" r="60" fill="#3b82f6" opacity="0.8"/>
+                            <circle cx="300" cy="100" r="60" fill="#f59e0b" opacity="0.8"/>
+                            <text x="200" y="170" text-anchor="middle" fill="#374151" font-size="14">Task Management App</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <h3>Task Management App</h3>
+                        <p>Interactive web application for task and project management with team collaboration features</p>
+                        <div class="project-tech">
+                            <span>Vue.js</span>
+                            <span>Express</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-small">View Project</a>
+                            <a href="#" class="btn btn-small btn-outline">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>ahmad@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>New York, United States</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <h3>Send Message</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ahmad. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script-en.js"></script>
+</body>
+</html>

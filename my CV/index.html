@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .language-selector {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .language-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            justify-content: center;
+        }
+        
+        .language-btn:hover {
+            border-color: #4f46e5;
+            background: #4f46e5;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+        
+        .language-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .auto-redirect {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .spinner {
+            border: 2px solid #f3f4f6;
+            border-top: 2px solid #4f46e5;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="language-selector">
+        <div class="logo">Ahmad</div>
+        <p class="subtitle">Choose your preferred language / اختر لغتك المفضلة</p>
+        
+        <div class="language-options">
+            <a href="index-en.html" class="language-btn" id="englishBtn">
+                <i class="fas fa-globe-americas"></i>
+                <span>English</span>
+            </a>
+            <a href="index-ar.html" class="language-btn" id="arabicBtn">
+                <i class="fas fa-globe-africa"></i>
+                <span>العربية</span>
+            </a>
+        </div>
+        
+        <div class="auto-redirect">
+            <p>Auto-detecting your language... / جاري تحديد لغتك تلقائياً...</p>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language detection and auto-redirect
+        function detectLanguage() {
+            // Check for saved language preference
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                return savedLang;
+            }
+            
+            // Check browser language
+            const browserLang = navigator.language || navigator.userLanguage;
+            
+            // Check if Arabic is preferred
+            if (browserLang.startsWith('ar') || browserLang.includes('ar')) {
+                return 'ar';
+            }
+            
+            // Default to English
+            return 'en';
+        }
+        
+        function redirectToLanguage(lang) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            // Save preference
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Redirect after a short delay
+            setTimeout(() => {
+                if (lang === 'ar') {
+                    window.location.href = 'index-ar.html';
+                } else {
+                    window.location.href = 'index-en.html';
+                }
+            }, 1000);
+        }
+        
+        // Auto-redirect after 3 seconds if no selection
+        let autoRedirectTimer = setTimeout(() => {
+            const detectedLang = detectLanguage();
+            redirectToLanguage(detectedLang);
+        }, 3000);
+        
+        // Manual language selection
+        document.getElementById('englishBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            clearTimeout(autoRedirectTimer);
+            redirectToLanguage('en');
+        });
+        
+        document.getElementById('arabicBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            clearTimeout(autoRedirectTimer);
+            redirectToLanguage('ar');
+        });
+        
+        // Check URL parameters for direct language selection
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+        if (langParam === 'ar' || langParam === 'en') {
+            redirectToLanguage(langParam);
+        }
+    </script>
+</body>
+</html>

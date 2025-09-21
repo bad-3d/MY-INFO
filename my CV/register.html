@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد - Ahmad Portfolio</title>
+    <link rel="stylesheet" href="auth-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Background Animation -->
+        <div class="background-animation">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+        </div>
+
+        <!-- Language Toggle -->
+        <div class="language-toggle-container">
+            <button class="language-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-globe"></i>
+                <span id="lang-text">English</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="auth-content">
+            <!-- Left Side - Registration Form -->
+            <div class="form-section register-form">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2 data-ar="إنشاء حساب جديد" data-en="Create Account">إنشاء حساب جديد</h2>
+                        <p data-ar="انضم إلينا وابدأ في إنشاء محفظة أعمالك الاحترافية" data-en="Join us and start building your professional portfolio">انضم إلينا وابدأ في إنشاء محفظة أعمالك الاحترافية</p>
+                    </div>
+
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" data-ar="الاسم الأول" data-en="First Name">الاسم الأول</label>
+                                <div class="input-container">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="firstName" name="firstName" required 
+                                           placeholder="أحمد">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" data-ar="اسم العائلة" data-en="Last Name">اسم العائلة</label>
+                                <div class="input-container">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="lastName" name="lastName" required 
+                                           placeholder="محمد">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" data-ar="البريد الإلكتروني" data-en="Email Address">البريد الإلكتروني</label>
+                            <div class="input-container">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required 
+                                       placeholder="example@email.com">
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="field-message" id="emailMessage"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</label>
+                            <div class="input-container">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" required 
+                                       placeholder="+966 50 123 4567">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profession" data-ar="المهنة" data-en="Profession">المهنة</label>
+                            <div class="input-container">
+                                <i class="fas fa-briefcase"></i>
+                                <select id="profession" name="profession" required>
+                                    <option value="" data-ar="اختر مهنتك" data-en="Select your profession">اختر مهنتك</option>
+                                    <option value="developer" data-ar="مطور برمجيات" data-en="Software Developer">مطور برمجيات</option>
+                                    <option value="designer" data-ar="مصمم" data-en="Designer">مصمم</option>
+                                    <option value="engineer" data-ar="مهندس" data-en="Engineer">مهندس</option>
+                                    <option value="manager" data-ar="مدير" data-en="Manager">مدير</option>
+                                    <option value="consultant" data-ar="استشاري" data-en="Consultant">استشاري</option>
+                                    <option value="freelancer" data-ar="مستقل" data-en="Freelancer">مستقل</option>
+                                    <option value="student" data-ar="طالب" data-en="Student">طالب</option>
+                                    <option value="other" data-ar="أخرى" data-en="Other">أخرى</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                            <div class="input-container">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required 
+                                       placeholder="••••••••">
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye" id="passwordIcon"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill"></div>
+                                </div>
+                                <span class="strength-text" data-ar="قوة كلمة المرور" data-en="Password strength">قوة كلمة المرور</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" data-ar="تأكيد كلمة المرور" data-en="Confirm Password">تأكيد كلمة المرور</label>
+                            <div class="input-container">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required 
+                                       placeholder="••••••••">
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye" id="confirmPasswordIcon"></i>
+                                </button>
+                            </div>
+                            <div class="field-message" id="confirmPasswordMessage"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                <span data-ar="أوافق على" data-en="I agree to the">أوافق على</span>
+                                <a href="#" data-ar="الشروط والأحكام" data-en="Terms & Conditions">الشروط والأحكام</a>
+                            </label>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="newsletter">
+                                <span class="checkmark"></span>
+                                <span data-ar="أريد تلقي النشرة الإخبارية والتحديثات" data-en="I want to receive newsletter and updates">أريد تلقي النشرة الإخبارية والتحديثات</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span data-ar="إنشاء الحساب" data-en="Create Account">إنشاء الحساب</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+
+                        <div class="divider">
+                            <span data-ar="أو" data-en="or">أو</span>
+                        </div>
+
+                        <div class="social-login">
+                            <button type="button" class="social-btn google-btn">
+                                <i class="fab fa-google"></i>
+                                <span data-ar="التسجيل بـ Google" data-en="Sign up with Google">التسجيل بـ Google</span>
+                            </button>
+                            <button type="button" class="social-btn github-btn">
+                                <i class="fab fa-github"></i>
+                                <span data-ar="التسجيل بـ GitHub" data-en="Sign up with GitHub">التسجيل بـ GitHub</span>
+                            </button>
+                        </div>
+
+                        <div class="form-footer">
+                            <p data-ar="لديك حساب بالفعل؟" data-en="Already have an account?">لديك حساب بالفعل؟</p>
+                            <a href="login.html" class="link-btn" data-ar="تسجيل الدخول" data-en="Sign in">تسجيل الدخول</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Side - Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <div class="logo">
+                        <h1>Ahmad</h1>
+                        <p class="logo-subtitle" data-ar="محفظة أعمال احترافية" data-en="Professional Portfolio">محفظة أعمال احترافية</p>
+                    </div>
+                    
+                    <div class="welcome-text">
+                        <h2 data-ar="ابدأ رحلتك المهنية!" data-en="Start Your Professional Journey!">ابدأ رحلتك المهنية!</h2>
+                        <p data-ar="أنشئ حسابك الآن واحصل على محفظة أعمال احترافية تساعدك في عرض مهاراتك ومشاريعك" data-en="Create your account now and get a professional portfolio to showcase your skills and projects">أنشئ حسابك الآن واحصل على محفظة أعمال احترافية تساعدك في عرض مهاراتك ومشاريعك</p>
+                    </div>
+
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-palette"></i>
+                            <div>
+                                <h4 data-ar="تصميم قابل للتخصيص" data-en="Customizable Design">تصميم قابل للتخصيص</h4>
+                                <p data-ar="خصص محفظتك حسب ذوقك" data-en="Customize your portfolio to your taste">خصص محفظتك حسب ذوقك</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h4 data-ar="متجاوب مع جميع الأجهزة" data-en="Responsive Design">متجاوب مع جميع الأجهزة</h4>
+                                <p data-ar="يعمل بشكل مثالي على جميع الشاشات" data-en="Works perfectly on all screens">يعمل بشكل مثالي على جميع الشاشات</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <div>
+                                <h4 data-ar="تحليلات مفصلة" data-en="Detailed Analytics">تحليلات مفصلة</h4>
+                                <p data-ar="تتبع زوار محفظتك وتفاعلهم" data-en="Track your portfolio visitors and engagement">تتبع زوار محفظتك وتفاعلهم</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Portfolio Button -->
+        <div class="back-to-portfolio">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                <span data-ar="العودة إلى المحفظة" data-en="Back to Portfolio">العودة إلى المحفظة</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p data-ar="جاري إنشاء الحساب..." data-en="Creating account...">جاري إنشاء الحساب...</p>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <div class="success-content">
+            <i class="fas fa-check-circle"></i>
+            <h3 data-ar="تم إنشاء الحساب بنجاح!" data-en="Account Created Successfully!">تم إنشاء الحساب بنجاح!</h3>
+            <p data-ar="مرحباً بك! سيتم توجيهك إلى لوحة التحكم..." data-en="Welcome! Redirecting to dashboard...">مرحباً بك! سيتم توجيهك إلى لوحة التحكم...</p>
+        </div>
+    </div>
+
+    <script src="auth-script.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAuth();
+            checkSavedLanguage();
+            setupFormValidation();
+        });
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleRegistration();
+        });
+
+        // Setup form validation
+        function setupFormValidation() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+
+            emailInput.addEventListener('blur', validateEmail);
+            passwordInput.addEventListener('input', validatePassword);
+            confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+        }
+
+        // Email validation
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailMessage = document.getElementById('emailMessage');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email && !emailRegex.test(email)) {
+                emailMessage.textContent = getCurrentLanguage() === 'ar' ? 'البريد الإلكتروني غير صحيح' : 'Invalid email address';
+                emailMessage.className = 'field-message error';
+                return false;
+            } else if (email) {
+                emailMessage.textContent = getCurrentLanguage() === 'ar' ? 'البريد الإلكتروني صحيح' : 'Email is valid';
+                emailMessage.className = 'field-message success';
+                return true;
+            }
+            emailMessage.textContent = '';
+            return true;
+        }
+
+        // Password validation
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.querySelector('.strength-fill');
+            const strengthText = document.querySelector('.strength-text');
+            
+            let strength = 0;
+            let strengthLabel = '';
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            const isArabic = getCurrentLanguage() === 'ar';
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    strengthBar.style.width = '20%';
+                    strengthBar.style.backgroundColor = '#ef4444';
+                    strengthLabel = isArabic ? 'ضعيف جداً' : 'Very Weak';
+                    break;
+                case 2:
+                    strengthBar.style.width = '40%';
+                    strengthBar.style.backgroundColor = '#f97316';
+                    strengthLabel = isArabic ? 'ضعيف' : 'Weak';
+                    break;
+                case 3:
+                    strengthBar.style.width = '60%';
+                    strengthBar.style.backgroundColor = '#eab308';
+                    strengthLabel = isArabic ? 'متوسط' : 'Medium';
+                    break;
+                case 4:
+                    strengthBar.style.width = '80%';
+                    strengthBar.style.backgroundColor = '#22c55e';
+                    strengthLabel = isArabic ? 'قوي' : 'Strong';
+                    break;
+                case 5:
+                    strengthBar.style.width = '100%';
+                    strengthBar.style.backgroundColor = '#16a34a';
+                    strengthLabel = isArabic ? 'قوي جداً' : 'Very Strong';
+                    break;
+            }
+
+            strengthText.textContent = strengthLabel;
+            return strength >= 3;
+        }
+
+        // Confirm password validation
+        function validateConfirmPassword() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmMessage = document.getElementById('confirmPasswordMessage');
+
+            if (confirmPassword && password !== confirmPassword) {
+                confirmMessage.textContent = getCurrentLanguage() === 'ar' ? 'كلمات المرور غير متطابقة' : 'Passwords do not match';
+                confirmMessage.className = 'field-message error';
+                return false;
+            } else if (confirmPassword && password === confirmPassword) {
+                confirmMessage.textContent = getCurrentLanguage() === 'ar' ? 'كلمات المرور متطابقة' : 'Passwords match';
+                confirmMessage.className = 'field-message success';
+                return true;
+            }
+            confirmMessage.textContent = '';
+            return true;
+        }
+
+        // Handle registration
+        function handleRegistration() {
+            // Validate all fields
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            const isConfirmPasswordValid = validateConfirmPassword();
+
+            if (!isEmailValid || !isPasswordValid || !isConfirmPasswordValid) {
+                return;
+            }
+
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                profession: document.getElementById('profession').value,
+                password: document.getElementById('password').value,
+                agreeTerms: document.getElementById('agreeTerms').checked,
+                newsletter: document.getElementById('newsletter').checked
+            };
+
+            // Show loading
+            showLoading();
+
+            // Simulate API call
+            setTimeout(() => {
+                hideLoading();
+                
+                // Save user data
+                const userData = {
+                    ...formData,
+                    id: Date.now(),
+                    registrationDate: new Date().toISOString(),
+                    isLoggedIn: true
+                };
+
+                delete userData.password; // Don't store password in localStorage
+                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('isLoggedIn', 'true');
+
+                // Show success message
+                showSuccessMessage();
+
+                // Redirect to profile editor
+                setTimeout(() => {
+                    window.location.href = 'profile-editor.html';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Show/hide loading
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            document.getElementById('successMessage').classList.add('active');
+        }
+
+        // Toggle password visibility - enhanced version
+        function togglePassword(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const passwordIcon = document.getElementById(fieldId + 'Icon');
+            
+            if (passwordInput && passwordIcon) {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordIcon.classList.remove('fa-eye');
+                    passwordIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordIcon.classList.remove('fa-eye-slash');
+                    passwordIcon.classList.add('fa-eye');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
