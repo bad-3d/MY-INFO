@@ -20,13 +20,13 @@
             justify-content: center;
         }
         
-        .language-selector {
+        .loading-container {
             background: white;
             border-radius: 20px;
             padding: 3rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 500px;
+            max-width: 400px;
             width: 90%;
         }
         
@@ -43,158 +43,99 @@
             font-size: 1.1rem;
         }
         
-        .language-options {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .language-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            background: white;
-            color: #374151;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            min-width: 150px;
-            justify-content: center;
-        }
-        
-        .language-btn:hover {
-            border-color: #4f46e5;
-            background: #4f46e5;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
-        }
-        
-        .language-btn i {
-            font-size: 1.2rem;
-        }
-        
-        .auto-redirect {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e5e7eb;
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-        
-        .loading {
-            display: none;
-            margin-top: 1rem;
-        }
-        
         .spinner {
-            border: 2px solid #f3f4f6;
-            border-top: 2px solid #4f46e5;
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #4f46e5;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 0 auto 1rem;
         }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .language-toggle {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .language-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .language-btn:hover {
+            border-color: #4f46e5;
+            background: #4f46e5;
+            color: white;
+            transform: translateY(-1px);
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="language-selector">
+    <div class="loading-container">
         <div class="logo">Ahmad</div>
-        <p class="subtitle">Choose your preferred language / اختر لغتك المفضلة</p>
+        <p class="subtitle">Loading Portfolio...</p>
+        <div class="spinner"></div>
+        <p style="color: #6b7280; font-size: 0.9rem;">Redirecting to English version</p>
         
-        <div class="language-options">
-            <a href="index-en.html" class="language-btn" id="englishBtn">
-                <i class="fas fa-globe-americas"></i>
-                <span>English</span>
-            </a>
-            <a href="index-ar.html" class="language-btn" id="arabicBtn">
-                <i class="fas fa-globe-africa"></i>
+        <div class="language-toggle">
+            <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 1rem;">Prefer Arabic?</p>
+            <a href="index-ar.html" class="language-btn">
+                <i class="fas fa-globe"></i>
                 <span>العربية</span>
             </a>
-        </div>
-        
-        <div class="auto-redirect">
-            <p>Auto-detecting your language... / جاري تحديد لغتك تلقائياً...</p>
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-            </div>
         </div>
     </div>
 
     <script>
-        // Language detection and auto-redirect
-        function detectLanguage() {
-            // Check for saved language preference
-            const savedLang = localStorage.getItem('preferredLanguage');
-            if (savedLang) {
-                return savedLang;
-            }
+        // Auto-redirect to English version
+        function redirectToEnglish() {
+            // Save English as preferred language
+            localStorage.setItem('preferredLanguage', 'en');
             
-            // Check browser language
-            const browserLang = navigator.language || navigator.userLanguage;
-            
-            // Check if Arabic is preferred
-            if (browserLang.startsWith('ar') || browserLang.includes('ar')) {
-                return 'ar';
-            }
-            
-            // Default to English
-            return 'en';
-        }
-        
-        function redirectToLanguage(lang) {
-            const loading = document.getElementById('loading');
-            loading.style.display = 'block';
-            
-            // Save preference
-            localStorage.setItem('preferredLanguage', lang);
-            
-            // Redirect after a short delay
+            // Redirect to English version
             setTimeout(() => {
-                if (lang === 'ar') {
-                    window.location.href = 'index-ar.html';
-                } else {
-                    window.location.href = 'index-en.html';
-                }
-            }, 1000);
+                window.location.href = 'index-en.html';
+            }, 1500);
         }
         
-        // Auto-redirect after 3 seconds if no selection
-        let autoRedirectTimer = setTimeout(() => {
-            const detectedLang = detectLanguage();
-            redirectToLanguage(detectedLang);
-        }, 3000);
-        
-        // Manual language selection
-        document.getElementById('englishBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            clearTimeout(autoRedirectTimer);
-            redirectToLanguage('en');
-        });
-        
-        document.getElementById('arabicBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            clearTimeout(autoRedirectTimer);
-            redirectToLanguage('ar');
-        });
+        // Check if user has a saved preference for Arabic
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang === 'ar') {
+            // If user previously chose Arabic, redirect there
+            window.location.href = 'index-ar.html';
+        } else {
+            // Default to English
+            redirectToEnglish();
+        }
         
         // Check URL parameters for direct language selection
         const urlParams = new URLSearchParams(window.location.search);
         const langParam = urlParams.get('lang');
-        if (langParam === 'ar' || langParam === 'en') {
-            redirectToLanguage(langParam);
+        if (langParam === 'ar') {
+            localStorage.setItem('preferredLanguage', 'ar');
+            window.location.href = 'index-ar.html';
+        } else if (langParam === 'en') {
+            localStorage.setItem('preferredLanguage', 'en');
+            window.location.href = 'index-en.html';
         }
     </script>
 </body>

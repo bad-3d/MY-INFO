@@ -44,55 +44,72 @@ function loadSavedData() {
 }
 
 function populateFormFields(data) {
+    // Helper function to safely set element value
+    function safeSetValue(elementId, value) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.value = value || '';
+        }
+    }
+    
+    function safeSetSrc(elementId, src) {
+        const element = document.getElementById(elementId);
+        if (element && src) {
+            element.src = src;
+        }
+    }
+    
     // Personal Information
     if (data.personal) {
-        document.getElementById('fullName').value = data.personal.fullName || '';
-        document.getElementById('jobTitle').value = data.personal.jobTitle || '';
-        document.getElementById('location').value = data.personal.location || '';
-        document.getElementById('birthDate').value = data.personal.birthDate || '';
-        document.getElementById('nationality').value = data.personal.nationality || '';
+        safeSetValue('fullName', data.personal.fullName);
+        safeSetValue('jobTitle', data.personal.jobTitle);
+        safeSetValue('location', data.personal.location);
+        safeSetValue('birthDate', data.personal.birthDate);
+        safeSetValue('nationality', data.personal.nationality);
         
-        if (data.personal.profilePicture) {
-            document.getElementById('profilePicture').src = data.personal.profilePicture;
-        }
+        safeSetSrc('profilePicture', data.personal.profilePicture);
     }
     
     // About section
     if (data.about) {
-        document.getElementById('aboutText').value = data.about.text || '';
+        safeSetValue('aboutText', data.about.text);
         
         // Populate interests
         if (data.about.interests) {
             const interestsContainer = document.getElementById('interestsContainer');
-            data.about.interests.forEach(interest => {
-                addInterestTag(interest);
-            });
+            if (interestsContainer) {
+                data.about.interests.forEach(interest => {
+                    addInterestTag(interest);
+                });
+            }
         }
     }
     
     // Contact information
     if (data.contact) {
-        document.getElementById('email').value = data.contact.email || '';
-        document.getElementById('phone').value = data.contact.phone || '';
-        document.getElementById('website').value = data.contact.website || '';
-        document.getElementById('linkedin').value = data.contact.linkedin || '';
-        document.getElementById('github').value = data.contact.github || '';
-        document.getElementById('twitter').value = data.contact.twitter || '';
+        safeSetValue('email', data.contact.email);
+        safeSetValue('phone', data.contact.phone);
+        safeSetValue('website', data.contact.website);
+        safeSetValue('linkedin', data.contact.linkedin);
+        safeSetValue('github', data.contact.github);
+        safeSetValue('twitter', data.contact.twitter);
     }
     
     // Skills
     if (data.skills) {
         data.skills.forEach(skill => {
-            addSkillToList(skill.name, skill.level);
+            if (typeof addSkillToList === 'function') {
+                addSkillToList(skill.name, skill.level);
+            }
         });
     }
     
     // Theme
     if (data.theme) {
-        document.getElementById('primaryColor').value = data.theme.primaryColor || '#4f46e5';
-        document.getElementById('secondaryColor').value = data.theme.secondaryColor || '#10b981';
-        document.getElementById('accentColor').value = data.theme.accentColor || '#f59e0b';
-        document.getElementById('backgroundColor').value = data.theme.backgroundColor || '#ffffff';
+        safeSetValue('primaryColor', data.theme.primaryColor || '#4f46e5');
+        safeSetValue('secondaryColor', data.theme.secondaryColor || '#10b981');
+        safeSetValue('accentColor', data.theme.accentColor || '#f59e0b');
+        safeSetValue('backgroundColor', data.theme.backgroundColor || '#ffffff');
     }
 }
 
@@ -141,64 +158,37 @@ function previewPortfolio() {
     // Save current data
     saveProfileData();
     
-    // Open preview in new tab
+    // Open preview in new tab and keep reference
     const currentLang = document.documentElement.lang;
     const previewUrl = currentLang === 'ar' ? 'index-ar.html' : 'index-en.html';
-    window.open(previewUrl, '_blank');
+    previewWindow = window.open(previewUrl, '_blank');
 }
 
 // Auto-save functionality
 let autoSaveTimer;
+let previewWindow = null;
+
 function scheduleAutoSave() {
     clearTimeout(autoSaveTimer);
     autoSaveTimer = setTimeout(() => {
         saveProfileData();
+        updatePreviewWindow();
         showSaveNotification('تم الحفظ التلقائي');
     }, 2000);
+}
+
+function updatePreviewWindow() {
+    // If preview window is open, reload it to show updated data
+    if (previewWindow && !previewWindow.closed) {
+        previewWindow.location.reload();
+    }
 }
 
 // Add event listeners for auto-save
 document.addEventListener('input', scheduleAutoSave);
 document.addEventListener('change', scheduleAutoSave);
 
-function showSaveNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'save-notification';
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #10b981;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        z-index: 1000;
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: all 0.3s ease;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.opacity = '1';
-        notification.style.transform = 'translateY(0)';
-    }, 100);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateY(-20px)';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
-}
+
 
 // Color picker updates
 document.addEventListener('change', function(e) {
@@ -214,14 +204,23 @@ document.addEventListener('change', function(e) {
 });
 
 function applyThemePreview() {
-    const primaryColor = document.getElementById('primaryColor').value;
-    const secondaryColor = document.getElementById('secondaryColor').value;
-    const accentColor = document.getElementById('accentColor').value;
+    const primaryColorEl = document.getElementById('primaryColor');
+    const secondaryColorEl = document.getElementById('secondaryColor');
+    const accentColorEl = document.getElementById('accentColor');
+    const backgroundColorEl = document.getElementById('backgroundColor');
     
-    // Update CSS custom properties for preview
-    document.documentElement.style.setProperty('--primary-color', primaryColor);
-    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-    document.documentElement.style.setProperty('--accent-color', accentColor);
+    if (primaryColorEl) {
+        document.documentElement.style.setProperty('--primary-color', primaryColorEl.value);
+    }
+    if (secondaryColorEl) {
+        document.documentElement.style.setProperty('--secondary-color', secondaryColorEl.value);
+    }
+    if (accentColorEl) {
+        document.documentElement.style.setProperty('--accent-color', accentColorEl.value);
+    }
+    if (backgroundColorEl) {
+        document.documentElement.style.setProperty('--background-color', backgroundColorEl.value);
+    }
 }
 
 // Initialize color values on page load
@@ -368,16 +367,7 @@ function saveProfile() {
     }, 1500);
 }
 
-// Preview portfolio function
-function previewPortfolio() {
-    // Save current data first
-    saveProfileData();
-    
-    // Open preview in new tab
-    setTimeout(() => {
-        window.open('index.html', '_blank');
-    }, 1000);
-}
+
 
 // Show loading overlay
 function showLoading() {
@@ -438,10 +428,33 @@ function toggleLanguage() {
         }
     });
     
+    // Update select options
+    document.querySelectorAll('option[data-ar][data-en]').forEach(option => {
+        if (newLang === 'ar') {
+            option.textContent = option.getAttribute('data-ar');
+        } else {
+            option.textContent = option.getAttribute('data-en');
+        }
+    });
+    
+    // Update page title
+    const titleElement = document.querySelector('title[data-ar][data-en]');
+    if (titleElement) {
+        if (newLang === 'ar') {
+            titleElement.textContent = titleElement.getAttribute('data-ar');
+        } else {
+            titleElement.textContent = titleElement.getAttribute('data-en');
+        }
+    }
+    
     // Update language toggle button
     const langToggle = document.querySelector('.lang-toggle');
     if (langToggle) {
-        langToggle.textContent = newLang === 'ar' ? 'EN' : 'عر';
+        if (newLang === 'ar') {
+            langToggle.textContent = langToggle.getAttribute('data-ar');
+        } else {
+            langToggle.textContent = langToggle.getAttribute('data-en');
+        }
     }
     
     // Save language preference
@@ -458,3 +471,8 @@ function initializeLanguage() {
         toggleLanguage();
     }
 }
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeLanguage();
+});

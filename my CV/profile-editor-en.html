@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Editor - Ahmad Portfolio</title>
     <link rel="stylesheet" href="auth-style.css">
-    <link rel="stylesheet" href="profile-editor-style.css">
     <link rel="stylesheet" href="profile-editor-style-en.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +19,7 @@
                     <p>Customize your professional portfolio</p>
                 </div>
                 <div class="header-right">
-                    <button class="language-toggle" onclick="switchLanguage('ar')">
+                    <button class="language-toggle" onclick="window.location.href='profile-editor-ar.html'">
                         <i class="fas fa-globe"></i>
                         <span>عربي</span>
                     </button>
@@ -197,24 +196,6 @@
         </div>
     </div>
 
-    <script>
-        // Language switching functionality with localStorage
-        function switchLanguage(lang) {
-            localStorage.setItem('preferredLanguage', lang);
-            if (lang === 'ar') {
-                window.location.href = 'profile-editor-ar.html';
-            }
-        }
-
-        // Check for saved language preference on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLanguage = localStorage.getItem('preferredLanguage');
-            if (savedLanguage === 'ar') {
-                window.location.href = 'profile-editor-ar.html';
-            }
-            // If no preference or preference is 'en', stay on current page (English)
-        });
-    </script>
     <script src="profile-editor-script-en.js"></script>
 </body>
 </html>

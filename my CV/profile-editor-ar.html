@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Editor - Ahmad Portfolio</title>
+    <title>تخصيص الملف الشخصي - Ahmad Portfolio</title>
     <link rel="stylesheet" href="auth-style.css">
     <link rel="stylesheet" href="profile-editor-style.css">
-    <link rel="stylesheet" href="profile-editor-style-en.css">
+    <link rel="stylesheet" href="profile-editor-style-ar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="profile-editor-container">
@@ -16,21 +16,21 @@
         <header class="editor-header">
             <div class="header-content">
                 <div class="header-left">
-                    <h1>Profile Editor</h1>
-                    <p>Customize your professional portfolio</p>
+                    <h1>تخصيص الملف الشخصي</h1>
+                    <p>قم بتخصيص محفظة أعمالك الاحترافية</p>
                 </div>
                 <div class="header-right">
-                    <button class="language-toggle" onclick="switchLanguage('ar')">
+                    <button class="language-toggle" onclick="switchLanguage('en')">
                         <i class="fas fa-globe"></i>
-                        <span>عربي</span>
+                        <span>English</span>
                     </button>
                     <button class="preview-btn" onclick="previewPortfolio()">
                         <i class="fas fa-eye"></i>
-                        <span>Preview</span>
+                        <span>معاينة</span>
                     </button>
                     <button class="save-btn" onclick="saveProfile()">
                         <i class="fas fa-save"></i>
-                        <span>Save</span>
+                        <span>حفظ</span>
                     </button>
                 </div>
             </div>
@@ -43,19 +43,19 @@
                 <div class="sidebar-menu">
                     <div class="menu-item active" data-section="personal" onclick="switchSection('personal')">
                         <i class="fas fa-user"></i>
-                        <span>Personal Info</span>
+                        <span>المعلومات الشخصية</span>
                     </div>
                     <div class="menu-item" data-section="about" onclick="switchSection('about')">
                         <i class="fas fa-info-circle"></i>
-                        <span>About Me</span>
+                        <span>نبذة عني</span>
                     </div>
                     <div class="menu-item" data-section="skills" onclick="switchSection('skills')">
                         <i class="fas fa-cogs"></i>
-                        <span>Skills</span>
+                        <span>المهارات</span>
                     </div>
                     <div class="menu-item" data-section="preview" onclick="switchSection('preview')">
                         <i class="fas fa-eye"></i>
-                        <span>Preview & Save</span>
+                        <span>معاينة وحفظ</span>
                     </div>
                 </div>
             </nav>
@@ -65,48 +65,48 @@
                 <!-- Personal Information Section -->
                 <section id="personal-section" class="editor-section active">
                     <div class="section-header">
-                        <h2>Personal Information</h2>
-                        <p>Enter your basic information</p>
+                        <h2>المعلومات الشخصية</h2>
+                        <p>أدخل معلوماتك الأساسية</p>
                     </div>
                     
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" placeholder="Ahmad Mohamed">
+                            <label for="fullName">الاسم الكامل</label>
+                            <input type="text" id="fullName" placeholder="أحمد محمد">
                         </div>
                         
                         <div class="form-group">
-                            <label for="jobTitle">Job Title</label>
-                            <input type="text" id="jobTitle" placeholder="Advanced Web Developer">
+                            <label for="jobTitle">المسمى الوظيفي</label>
+                            <input type="text" id="jobTitle" placeholder="مطور ويب متقدم">
                         </div>
                         
                         <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" placeholder="New York, USA">
+                            <label for="location">الموقع</label>
+                            <input type="text" id="location" placeholder="الرياض، السعودية">
                         </div>
                         
                         <div class="form-group">
-                            <label for="nationality">Nationality</label>
+                            <label for="nationality">الجنسية</label>
                             <select id="nationality">
-                                <option value="">Select Nationality</option>
-                                <option value="american">American</option>
-                                <option value="british">British</option>
-                                <option value="canadian">Canadian</option>
-                                <option value="australian">Australian</option>
-                                <option value="german">German</option>
-                                <option value="french">French</option>
-                                <option value="italian">Italian</option>
-                                <option value="spanish">Spanish</option>
-                                <option value="dutch">Dutch</option>
-                                <option value="swedish">Swedish</option>
-                                <option value="norwegian">Norwegian</option>
-                                <option value="danish">Danish</option>
-                                <option value="finnish">Finnish</option>
-                                <option value="swiss">Swiss</option>
-                                <option value="austrian">Austrian</option>
-                                <option value="belgian">Belgian</option>
-                                <option value="irish">Irish</option>
-                                <option value="portuguese">Portuguese</option>
+                                <option value="">اختر الجنسية</option>
+                                <option value="saudi">سعودي</option>
+                                <option value="egyptian">مصري</option>
+                                <option value="jordanian">أردني</option>
+                                <option value="lebanese">لبناني</option>
+                                <option value="syrian">سوري</option>
+                                <option value="iraqi">عراقي</option>
+                                <option value="kuwaiti">كويتي</option>
+                                <option value="emirati">إماراتي</option>
+                                <option value="qatari">قطري</option>
+                                <option value="bahraini">بحريني</option>
+                                <option value="omani">عماني</option>
+                                <option value="yemeni">يمني</option>
+                                <option value="moroccan">مغربي</option>
+                                <option value="algerian">جزائري</option>
+                                <option value="tunisian">تونسي</option>
+                                <option value="libyan">ليبي</option>
+                                <option value="sudanese">سوداني</option>
+                                <option value="palestinian">فلسطيني</option>
                             </select>
                         </div>
                     </div>
@@ -115,48 +115,48 @@
                 <!-- About Me Section -->
                 <section id="about-section" class="editor-section">
                     <div class="section-header">
-                        <h2>About Me</h2>
-                        <p>Write a brief description about yourself and your skills</p>
+                        <h2>نبذة عني</h2>
+                        <p>اكتب نبذة مختصرة عن نفسك ومهاراتك</p>
                     </div>
                     
                     <div class="form-group">
-                        <label for="aboutText">Bio Text</label>
-                        <textarea id="aboutText" rows="6" placeholder="Write a brief description about yourself, your experience, and professional goals..."></textarea>
+                        <label for="aboutText">النص التعريفي</label>
+                        <textarea id="aboutText" rows="6" placeholder="اكتب نبذة مختصرة عن نفسك، خبراتك، وأهدافك المهنية..."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="interests">Interests</label>
-                        <input type="text" id="interests" placeholder="Programming, Design, Technology">
-                        <small>Separate interests with commas</small>
+                        <label for="interests">الاهتمامات</label>
+                        <input type="text" id="interests" placeholder="البرمجة، التصميم، التكنولوجيا">
+                        <small>افصل بين الاهتمامات بفاصلة</small>
                     </div>
                 </section>
 
                 <!-- Skills Section -->
                 <section id="skills-section" class="editor-section">
                     <div class="section-header">
-                        <h2>Skills</h2>
-                        <p>Add your technical and professional skills</p>
+                        <h2>المهارات</h2>
+                        <p>أضف مهاراتك التقنية والمهنية</p>
                     </div>
                     
                     <div class="skills-input-section">
                         <div class="form-group">
-                            <label for="skillName">Skill Name</label>
-                            <input type="text" id="skillName" placeholder="Enter skill name">
+                            <label for="skillName">اسم المهارة</label>
+                            <input type="text" id="skillName" placeholder="اكتب اسم المهارة">
                         </div>
                         
                         <div class="form-group">
-                            <label for="skillLevel">Proficiency Level</label>
+                            <label for="skillLevel">مستوى الإتقان</label>
                             <select id="skillLevel">
-                                <option value="beginner">Beginner</option>
-                                <option value="intermediate">Intermediate</option>
-                                <option value="advanced">Advanced</option>
-                                <option value="expert">Expert</option>
+                                <option value="beginner">مبتدئ</option>
+                                <option value="intermediate">متوسط</option>
+                                <option value="advanced">متقدم</option>
+                                <option value="expert">خبير</option>
                             </select>
                         </div>
                         
                         <button type="button" class="add-skill-btn" onclick="addSkill()">
                             <i class="fas fa-plus"></i>
-                            Add Skill
+                            إضافة مهارة
                         </button>
                     </div>
                     
@@ -168,24 +168,24 @@
                 <!-- Preview Section -->
                 <section id="preview-section" class="editor-section">
                     <div class="section-header">
-                        <h2>Preview & Save</h2>
-                        <p>Review your profile before saving</p>
+                        <h2>معاينة وحفظ</h2>
+                        <p>راجع ملفك الشخصي قبل الحفظ</p>
                     </div>
                     
                     <div class="preview-actions">
                         <button class="preview-btn large" onclick="previewPortfolio()">
                             <i class="fas fa-eye"></i>
-                            Preview Profile
+                            معاينة الملف الشخصي
                         </button>
                         
                         <button class="save-btn large" onclick="saveProfile()">
                             <i class="fas fa-save"></i>
-                            Save Changes
+                            حفظ التغييرات
                         </button>
                         
                         <button class="export-btn large" onclick="exportProfile()">
                             <i class="fas fa-download"></i>
-                            Export Profile
+                            تصدير الملف الشخصي
                         </button>
                     </div>
                     
@@ -201,20 +201,20 @@
         // Language switching functionality with localStorage
         function switchLanguage(lang) {
             localStorage.setItem('preferredLanguage', lang);
-            if (lang === 'ar') {
-                window.location.href = 'profile-editor-ar.html';
+            if (lang === 'en') {
+                window.location.href = 'profile-editor.html';
             }
         }
 
         // Check for saved language preference on page load
         document.addEventListener('DOMContentLoaded', function() {
             const savedLanguage = localStorage.getItem('preferredLanguage');
-            if (savedLanguage === 'ar') {
-                window.location.href = 'profile-editor-ar.html';
+            if (savedLanguage === 'en') {
+                window.location.href = 'profile-editor.html';
             }
-            // If no preference or preference is 'en', stay on current page (English)
+            // If no preference or preference is 'ar', stay on current page (Arabic)
         });
     </script>
-    <script src="profile-editor-script-en.js"></script>
+    <script src="profile-editor-script-ar.js"></script>
 </body>
 </html>

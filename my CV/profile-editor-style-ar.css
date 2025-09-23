@@ -1,0 +1,137 @@
+/* Arabic Language Styles for Profile Editor */
+
+/* Override LTR direction for Arabic */
+html[lang="ar"] {
+    direction: rtl !important;
+}
+
+html[lang="ar"] body {
+    direction: rtl !important;
+    font-family: 'Cairo', 'Amiri', 'Noto Sans Arabic', sans-serif !important;
+    text-align: right !important;
+}
+
+/* Header adjustments for Arabic */
+html[lang="ar"] .header-content {
+    flex-direction: row-reverse !important;
+}
+
+html[lang="ar"] .header-left {
+    text-align: right !important;
+}
+
+html[lang="ar"] .header-right {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
+
+/* Sidebar adjustments for Arabic */
+html[lang="ar"] .editor-sidebar {
+    right: 0 !important;
+    left: auto !important;
+    border-right: none !important;
+    border-left: 1px solid #e5e7eb !important;
+}
+
+html[lang="ar"] .editor-main {
+    margin-right: 280px !important;
+    margin-left: 0 !important;
+}
+
+html[lang="ar"] .menu-item {
+    text-align: right !important;
+    padding: 12px 20px !important;
+}
+
+html[lang="ar"] .menu-item i {
+    margin-left: 12px !important;
+    margin-right: 0 !important;
+}
+
+/* Form adjustments for Arabic */
+html[lang="ar"] .form-group label {
+    text-align: right !important;
+}
+
+html[lang="ar"] .form-control {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+html[lang="ar"] .form-row {
+    flex-direction: row-reverse !important;
+}
+
+html[lang="ar"] .form-row .form-group:first-child {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+}
+
+/* Button adjustments for Arabic */
+html[lang="ar"] .btn-group {
+    flex-direction: row-reverse !important;
+}
+
+html[lang="ar"] .btn i {
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+}
+
+/* Language toggle button */
+html[lang="ar"] .language-toggle {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+html[lang="ar"] .language-toggle:hover {
+    background: #d97706;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Skills and interests adjustments */
+html[lang="ar"] .skill-item,
+html[lang="ar"] .interest-tag {
+    text-align: right !important;
+}
+
+html[lang="ar"] .skill-level {
+    direction: rtl !important;
+}
+
+/* Preview area adjustments */
+html[lang="ar"] .preview-area {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Grid layout adjustments for Arabic */
+html[lang="ar"] .editor-layout {
+    grid-template-columns: 1fr 250px !important;
+}
+
+/* Responsive adjustments for Arabic */
+@media (max-width: 768px) {
+    html[lang="ar"] .editor-layout {
+        grid-template-columns: 1fr !important;
+    }
+    
+    html[lang="ar"] .editor-sidebar {
+        position: relative !important;
+        right: auto !important;
+        margin-right: 0 !important;
+    }
+    
+    html[lang="ar"] .editor-main {
+        margin-right: 0 !important;
+    }
+}
